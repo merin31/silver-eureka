@@ -4,6 +4,7 @@ from urllib.parse import urlparse
 from auth import AuthService
 
 class RequestHandler(http.server.BaseHTTPRequestHandler):
+    
     def __init__(self, *args, **kwargs):
         self.auth_service = AuthService()
         super().__init__(*args, **kwargs)

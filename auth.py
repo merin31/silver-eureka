@@ -1,6 +1,6 @@
 import json
 from database import DatabaseManager
-from utils import send_response
+from utils import send_response, generate_jwt
 from validator import Validator
 
 class AuthService:
@@ -110,18 +110,25 @@ class AuthService:
 
         user = self.db.fetch_query(
             """
-                SELECT * FROM users WHERE email=? AND password=?;
+                SELECT id, first_name, role FROM users WHERE email=? AND password=?;
             """,
             (email, hashed_pwd)
         )
 
         if user:
-            
+            user_id, first_name, role = user[0]
+            token = generate_jwt(user_id, role)
             send_response(
                 handler,
                 {
                     "message": "User logged in successfully!",
-                    "user": {"id": user[0][0], "first_name": user[0][1], "role": user[0][2]}
+                    "user": {
+                        "id": user_id,
+                        "first_name": first_name,
+                        "role": role,
+                    },
+                    "token": token
+                    
                 }, 
             )
         else:
