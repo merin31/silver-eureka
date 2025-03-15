@@ -57,3 +57,14 @@ class Validator:
             return False, "Invalid email format"
 
         return True, "Valid"
+
+
+    @staticmethod
+    def validate_artist(data):
+        required_fields = ["name", "dob", "gender","address", "first_released_year", "no_of_album_released"]
+        for field in required_fields:
+            if not data.get(field):
+                return False, f"Missing required field: {field}"
+        if not Validator.is_valid_date(data["dob"]):
+            return False, "Invalid date format (expected YYYY-MM-DD)"
+        return True, "Valid"

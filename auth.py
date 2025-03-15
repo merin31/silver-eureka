@@ -3,6 +3,7 @@ from database import DatabaseManager
 from utils import send_response, generate_jwt
 from validator import Validator
 
+
 class AuthService:
     def __init__(self):
         self.db = DatabaseManager()
@@ -54,22 +55,43 @@ class AuthService:
         address = post_data.get("address")
         role = post_data.get("role")
         hashed_pwd = self.db.hash_password(password)
-
-        self.db.execute_query(
-            """
-                INSERT INTO users (
+        
+        if email:
+            user = self.db.fetch_query("SELECT * FROM users WHERE email = ?;", (post_data["email"],))
+            if user:
+                send_response(
+                    handler,
+                    {
+                        "error": "Email already exists"
+                    }, status=400
+                )
+                return
+        try:
+            self.db.execute_query(
+                """
+                    INSERT INTO users (
+                        first_name, last_name, email,
+                        password, phone, dob,
+                        gender, address, role) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+                """, 
+                (
                     first_name, last_name, email,
-                    password, phone, dob, 
-                    gender, address, role) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
-            """, 
-            (
-                first_name, last_name, email,
-                hashed_pwd, phone, dob,
-                gender, address, role
-            
+                    hashed_pwd, phone, dob,
+                    gender, address, role
+                )
             )
-        )
+        except Exception as e:
+            send_response(
+                handler,
+                {
+                    "error": str(e)
+                }, status=400
+            )
+            return
+        finally:
+            self.db.close()
+        
         send_response(
             handler,
             {
@@ -114,7 +136,6 @@ class AuthService:
             """,
             (email, hashed_pwd)
         )
-
         if user:
             user_id, first_name, role = user[0]
             token = generate_jwt(user_id, role)

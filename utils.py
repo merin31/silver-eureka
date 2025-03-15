@@ -5,7 +5,6 @@ from config import JWT_CONFIG
 
 
 
-
 def send_response(handler, data, status=200):
     handler.send_response(status)
     handler.send_header('Content-Type', 'application/json')
@@ -22,3 +21,5 @@ def generate_jwt(user_id, role):
         )
     }
     return jwt.encode(payload, JWT_CONFIG.get('secret_key'), algorithm="HS256")
+
+

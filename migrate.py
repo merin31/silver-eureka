@@ -21,7 +21,7 @@ SCHEMA_QUERIES = [
     
     """CREATE TABLE IF NOT EXISTS artists (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT UNIQUE NOT NULL,
+        name TEXT NOT NULL,
         dob TEXT NOT NULL,
         gender TEXT CHECK (gender IN ('male', 'female', 'other')) NOT NULL,
         address TEXT NOT NULL,
@@ -41,6 +41,8 @@ SCHEMA_QUERIES = [
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (artist_id) REFERENCES artists(id) ON DELETE CASCADE
     );""",
+
+
 ]
 
 def run_migrations():
