@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Artist Management System</title>
+    <link rel="stylesheet" href="/assets/style.css">
+</head>
+
+<body class="centered-container">
+    <div class="login-box">
+        <h2>Login</h2>
+        <form id="login-form" onsubmit="login(event)">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter password" required>
+            </div>
+
+            <button type="submit" class="btn">Login</button>
+        </form>
+
+        <div id="message" class="message"></div>
+    </div>
+
+    <script>
+        function login(event) {
+            event.preventDefault();
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            fetch("/login/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, password })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const messageBox = document.getElementById("message");
+
+                    if (data.token) {
+                        localStorage.setItem("token", data.token);
+                        messageBox.textContent = "Login successful!";
+                        messageBox.classList.add("success");
+
+                        setTimeout(() => {
+                            window.location.href = "/dashboard.html";
+                        }, 1000);
+                    } else {
+                        messageBox.textContent = data.error || "Login failed.";
+                        messageBox.classList.add("error");
+                    }
+                })
+                .catch(error => {
+                    const messageBox = document.getElementById("message");
+                    messageBox.textContent = "An error occurred.";
+                    messageBox.classList.add("error");
+                    console.error("Error:", error);
+                });
+        }
+    </script>
+
+</body>
+
+</html>

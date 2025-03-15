@@ -24,7 +24,7 @@ class UserService:
         paginator = Paginator(base_url=urlparse(handler.path).path, page=page, limit=limit, total_records=total_records)
 
         users = self.db.fetch_query("""
-            SELECT id, first_name, last_name, email, phone, role, created_at, updated_at
+            SELECT id, first_name, last_name, email, phone, role, address, created_at, updated_at, gender
             FROM users
             ORDER BY id
             LIMIT ? OFFSET ?;
@@ -40,13 +40,15 @@ class UserService:
                 "email": user[3],
                 "phone": user[4],
                 "role": user[5],
-                "created_at": user[6],
-                "updated_at": user[7],
+                "address": user[6],
+                "gender": user[9],
+                "created_at": user[7],
+                "updated_at": user[8],
             })
         pagination_meta = paginator.get_pagination_meta()
         pagination_meta["data"] = user_list
         
-        send_response(handler, paginated_data)
+        send_response(handler, pagination_meta)
 
 
     def create_user(self, handler, decoded_token):
@@ -145,7 +147,7 @@ class UserService:
     def delete_user(self, handler, decoded_token, user_id):
         print(decoded_token,'decoded_token')
         print(user_id,'user')
-        user = self.db.fetch_query("SELECT * FROM users WHERE id = ? AND role != 'super_admin';", (user_id,))
+        user = self.db.fetch_query("SELECT * FROM users WHERE id = ? ;", (user_id,))
         print(user,'user')
         if not user:
             send_response(handler, {"error": "User not found"}, status=404)
@@ -153,8 +155,6 @@ class UserService:
         self.db.execute_query("DELETE FROM users WHERE id = ?;", (user_id,))
         self.db.close()
         send_response(handler, {"message": f"User {user_id} deleted successfully"})
-    
-
 
 
     def handle_request(self, handler, method):
@@ -176,7 +176,6 @@ class UserService:
         elif method == "DELETE":
             pattern = re.search(r'/users/\d+', handler.path)
             user_id = pattern.group().split('/')[-1]
-            # user_id = handler.path.split('/')[-1]
             print(user_id,'user i')
             self.delete_user(handler, decoded_token, user_id)
         else:

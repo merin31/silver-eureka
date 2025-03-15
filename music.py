@@ -16,11 +16,49 @@ class MusicService:
         query_params = parse_qs(
             handler.path.split("?")[1] if "?" in handler.path else ""
         )
+        artist_id = query_params.get("artist_id", [None])[0]
+        print(query_params.get("artist_id",0))
+        print(artist_id,'artist id')
         page = int(query_params.get("page", [1])[0])
         limit = int(query_params.get("limit", [10])[0])
         offset = (page - 1) * limit
 
-        total_records = self.db.fetch_query("SELECT COUNT(*) FROM music;")[0][0]
+
+        music_count_query = "SELECT COUNT(*) FROM music;"
+        music_query = """
+            SELECT id, artist_id, title, album_name, genre, created_at, updated_at
+            FROM music
+            ORDER BY id
+            LIMIT ? OFFSET ?;
+        """
+        if artist_id:
+            music_count_query = f"SELECT COUNT(*) FROM music WHERE artist_id = {artist_id};"
+            print(music_count_query)
+            music_query = """
+                SELECT id, artist_id, title, album_name, genre, created_at, updated_at
+                FROM music
+                WHERE artist_id = ?
+                ORDER BY id
+                LIMIT ? OFFSET ?;
+            """
+        
+        
+        # if artist_id:
+        #     music_count_query = """
+        #         SELECT id, artist_id, title, album_name, genre, created_at, updated_at
+        #         FROM music
+        #         WHERE artist_id = ?
+        #         ORDER BY id
+        #         LIMIT ? OFFSET ?;
+        #     """
+            
+        #     music_list = self.db.fetch_query(
+        #         music_query, (artist_id, limit, offset)
+        #     )
+        #     if not music_list:
+        #         send_response(handler, {"error": "No music found for the artist"}, status=404)
+        #         return
+        total_records = self.db.fetch_query(music_count_query)[0][0]
 
         base_url = "/music"
         paginator = Paginator(
@@ -28,13 +66,7 @@ class MusicService:
         )
 
         music_list = self.db.fetch_query(
-            """
-            SELECT id, artist_id, title, album_name, genre, created_at, updated_at
-            FROM music
-            ORDER BY id
-            LIMIT ? OFFSET ?;
-        """,
-            (limit, offset),
+            music_query, (limit, offset) if not artist_id else (artist_id, limit, offset)
         )
 
         music_records = []
@@ -150,7 +182,6 @@ class MusicService:
         decoded_token = verify_jwt(handler)
         if not decoded_token:
             return
-
         if not check_permissions(handler, decoded_token, "music", method):
             return
 

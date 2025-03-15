@@ -41,13 +41,31 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
 
     def do_GET(self):
         path = urlparse(self.path).path
-        print(path,'path')
-        if path == '/users/':
+
+        if path == "/":
+            self.serve_static_page("login.html")
+        elif path.endswith(".html"):
+            self.serve_static_page(path.strip("/"))
+        elif path.startswith("/assets/"):
+            self.serve_static_asset(path.strip("/"))
+        
+        # if path == "/":
+        #     self.serve_static_page("index.html")
+        # elif path == "/users.html":
+        #     self.serve_static_page("users.html")
+        # elif path == "/artists.html":
+        #     self.serve_static_page("artists.html")
+        # elif path == "/music.html":
+        #     self.serve_static_page("music.html")
+
+
+        elif path.startswith("/users"):
             self.user_service.handle_request(self, "GET")
-        elif path.startswith("/artists/"):
+        elif path.startswith("/artists"):
             self.artist_service.handle_request(self, "GET")
-        elif path.startswith("/music/"):
+        elif path.startswith("/music"):
             self.music_service.handle_request(self, "GET")
+
         else:
             self.send_response(404)
             self.end_headers()
@@ -81,3 +99,31 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
             self.send_response(404)
             self.end_headers()
             self.wfile.write(b'{"error": "Not found"}')
+
+
+    def serve_static_page(self, filename):
+        try:
+            with open(f"templates/{filename}", "rb") as f:
+                self.send_response(200)
+                self.send_header("Content-type", "text/html")
+                self.end_headers()
+                self.wfile.write(f.read())
+        except FileNotFoundError:
+            self.send_response(404)
+            self.end_headers()
+            self.wfile.write(b"Page not found")
+
+    def serve_static_asset(self, filename):
+        try:
+            with open(filename, "rb") as f:
+                self.send_response(200)
+                if filename.endswith(".css"):
+                    self.send_header("Content-type", "text/css")
+                else:
+                    self.send_header("Content-type", "application/octet-stream")
+                self.end_headers()
+                self.wfile.write(f.read())
+        except FileNotFoundError:
+            self.send_response(404)
+            self.end_headers()
+            self.wfile.write(b"Asset not found")
