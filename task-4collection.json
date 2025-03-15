@@ -1,0 +1,470 @@
+{
+    "info": {
+        "_postman_id": "f0c29941-f270-4b40-9778-be6ce7c6ae27",
+        "name": "task-4",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "User Register",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://127.0.0.1:8080/register/",
+                    "path": [
+                        "register"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"first_name\": \"Alice6\",\n  \"last_name\": \"Smith6\",\n  \"email\": \"test6@mail.com\",\n  \"phone\": \"9876566657\",\n  \"role\": \"super_admin\",\n  \"password\": \"admin\",\n  \"dob\": \"2000-12-12\",\n  \"gender\":\"male\",\n  \"address\": \"jhapa\"\n}"
+                }
+            }
+        },
+        {
+            "name": "login",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://127.0.0.1:8080/login/",
+                    "path": [
+                        "login"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"email\": \"test3@mail.com\",\n  \"password\": \"admin\"\n}"
+                }
+            }
+        },
+        {
+            "name": "user list",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://127.0.0.1:8080/users/?page=1&limit=40",
+                    "query": [
+                        {
+                            "key": "page",
+                            "value": "1"
+                        },
+                        {
+                            "key": "limit",
+                            "value": "40"
+                        }
+                    ],
+                    "variable": [],
+                    "path": [
+                        "users"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJleHAiOjE3NDIzOTI0NTV9.2EdZLWZJKEHhEPLwy3NtHkvor8GVW8Z27ZZPpHUnckY"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "create user",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://127.0.0.1:8080/users/",
+                    "path": [
+                        "users"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJleHAiOjE3NDE4ODk2NzN9.zCZZ6_Rn9SOyk1_FtgmKSD3i1ZL9_WxrqF6zWO3YeFk"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"first_name\": \"Alice8\",\n  \"last_name\": \"Smith8\",\n  \"email\": \"test20@mail.com\",\n  \"phone\": \"9876566657\",\n  \"role\": \"artist\",\n  \"password\": \"admin\",\n  \"dob\": \"2000-12-12\",\n  \"gender\":\"male\",\n  \"address\": \"jhapa\"\n}"
+                }
+            }
+        },
+        {
+            "name": "user update",
+            "request": {
+                "method": "PUT",
+                "url": {
+                    "raw": "http://127.0.0.1:8080/users/17/",
+                    "path": [
+                        "users",
+                        "17"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJleHAiOjE3NDE4ODk2NzN9.zCZZ6_Rn9SOyk1_FtgmKSD3i1ZL9_WxrqF6zWO3YeFk"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\"first_name\": \"mmmm\",\n  \"last_name\": \"baskota\",\n      \"email\": \"test21@mail.com\",\n      \"phone\": \"9876566657\"\n}"
+                }
+            }
+        },
+        {
+            "name": "delete user",
+            "request": {
+                "method": "DELETE",
+                "url": {
+                    "raw": "http://127.0.0.1:8080/users/7/",
+                    "path": [
+                        "users",
+                        "7"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJleHAiOjE3NDIzOTI0NTV9.2EdZLWZJKEHhEPLwy3NtHkvor8GVW8Z27ZZPpHUnckY"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "artist list",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://127.0.0.1:8080/artists/",
+                    "path": [
+                        "artists"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJleHAiOjE3NDIzOTI0NTV9.2EdZLWZJKEHhEPLwy3NtHkvor8GVW8Z27ZZPpHUnckY"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "create artist",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://127.0.0.1:8080/artists/",
+                    "path": [
+                        "artists"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo4LCJyb2xlIjoiYXJ0aXN0X21hbmFnZXIiLCJleHAiOjE3NDIzOTM3MTF9.Lza7EuXYyDmrTWXoh0f0H6BVSEBcWrE9YMnDXPMnGms"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"name\": \"merin\",\n  \"dob\":\"2001-06-06\",\n  \"gender\":\"male\",\n  \"address\":\"balkot\",\n  \"first_released_year\":\"2001\",\n  \"no_of_album_released\": \"3\"\n}"
+                }
+            }
+        },
+        {
+            "name": "update artist",
+            "request": {
+                "method": "PUT",
+                "url": {
+                    "raw": "http://127.0.0.1:8080/artists/1/",
+                    "path": [
+                        "artists",
+                        "1"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo4LCJyb2xlIjoiYXJ0aXN0X21hbmFnZXIiLCJleHAiOjE3NDIzOTM3MTF9.Lza7EuXYyDmrTWXoh0f0H6BVSEBcWrE9YMnDXPMnGms"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"name\":\"mm\",\n  \"first_released_year\":2019\n}"
+                }
+            }
+        },
+        {
+            "name": "delete artist",
+            "request": {
+                "method": "DELETE",
+                "url": {
+                    "raw": "http://127.0.0.1:8080/artists/2/",
+                    "path": [
+                        "artists",
+                        "2"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo4LCJyb2xlIjoiYXJ0aXN0X21hbmFnZXIiLCJleHAiOjE3NDIzOTM3MTF9.Lza7EuXYyDmrTWXoh0f0H6BVSEBcWrE9YMnDXPMnGms"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "list music",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://127.0.0.1:8080/music/?artist_id=2",
+                    "query": [
+                        {
+                            "key": "artist_id",
+                            "value": "2"
+                        }
+                    ],
+                    "variable": [],
+                    "path": [
+                        "music"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo4LCJyb2xlIjoiYXJ0aXN0X21hbmFnZXIiLCJleHAiOjE3NDIzOTM3MTF9.Lza7EuXYyDmrTWXoh0f0H6BVSEBcWrE9YMnDXPMnGms"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "create music",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://127.0.0.1:8080/music/",
+                    "path": [
+                        "music"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMCwicm9sZSI6ImFydGlzdCIsImV4cCI6MTc0MjM5ODU0OX0.o1lr1bTeJ8zmo8NsCo-EKp4iPCha5xxLm9WJECNivB0"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"artist_id\":3,\n  \"title\":\"test 1\",\n  \"album_name\": \"alb 1\",\n  \"genre\": \"rock\"\n}"
+                }
+            }
+        },
+        {
+            "name": "delete music",
+            "request": {
+                "method": "DELETE",
+                "url": {
+                    "raw": "http://127.0.0.1:8080/music/6/",
+                    "path": [
+                        "music",
+                        "6"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMCwicm9sZSI6ImFydGlzdCIsImV4cCI6MTc0MjM5ODU0OX0.o1lr1bTeJ8zmo8NsCo-EKp4iPCha5xxLm9WJECNivB0"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "update music",
+            "request": {
+                "method": "PUT",
+                "url": {
+                    "raw": "http://127.0.0.1:8080/music/6/",
+                    "path": [
+                        "music",
+                        "6"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMCwicm9sZSI6ImFydGlzdCIsImV4cCI6MTc0MjM5ODU0OX0.o1lr1bTeJ8zmo8NsCo-EKp4iPCha5xxLm9WJECNivB0"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"artist_id\":12,\n  \"title\":\"test 2\",\n  \"album_name\": \"alb 1\",\n  \"genre\": \"rock\"\n}"
+                }
+            }
+        }
+    ]
+}
