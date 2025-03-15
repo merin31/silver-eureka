@@ -1,6 +1,7 @@
 import re
 from datetime import datetime
 
+
 class Validator:
 
     @staticmethod
@@ -22,7 +23,17 @@ class Validator:
 
     @staticmethod
     def validate_user(data):
-        required_fields = ["first_name", "last_name", "email", "password", "phone", "dob", "gender", "address", "role"]
+        required_fields = [
+            "first_name",
+            "last_name",
+            "email",
+            "password",
+            "phone",
+            "dob",
+            "gender",
+            "address",
+            "role",
+        ]
 
         for field in required_fields:
             if not data.get(field):
@@ -58,13 +69,29 @@ class Validator:
 
         return True, "Valid"
 
-
     @staticmethod
     def validate_artist(data):
-        required_fields = ["name", "dob", "gender","address", "first_released_year", "no_of_album_released"]
+        required_fields = [
+            "name",
+            "dob",
+            "gender",
+            "address",
+            "first_released_year",
+            "no_of_album_released",
+        ]
         for field in required_fields:
             if not data.get(field):
                 return False, f"Missing required field: {field}"
         if not Validator.is_valid_date(data["dob"]):
             return False, "Invalid date format (expected YYYY-MM-DD)"
+        return True, "Valid"
+
+    @staticmethod
+    def validate_music(data):
+        required_fields = ["artist_id", "title", "album_name", "genre"]
+        for field in required_fields:
+            if not data.get(field):
+                return False, f"Missing required field: {field}"
+        if data["genre"] not in ["rnb", "country", "classic", "rock", "jazz"]:
+            return False, "Invalid genre value"
         return True, "Valid"
